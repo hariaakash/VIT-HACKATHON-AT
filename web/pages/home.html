@@ -1,0 +1,56 @@
+<div class="row">
+	<div class="col">
+		<div class="card border-primary">
+			<div class="card-header bg-transparent text-center">
+				Reports
+			</div>
+			<div class="card-body">
+				<h4 class="card-title" ng-show="!homeData.images.length">No reports yet ..</h4>
+				<table class="table table-hover text-center" ng-show="homeData.images.length">
+					<thead>
+						<tr>
+							<th class="text-center">#</th>
+							<th class="text-center">Image</th>
+							<th class="text-center">Time</th>
+							<th class="text-center">Prediction</th>
+							<th class="text-center">View</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="x in homeData.images">
+							<th scope="row">{{$index+1}}</th>
+							<td><img src="{{x.url}}" width="50px" height="50px"></td>
+							<td>{{x.time | date: 'MMM d, y H:mm:ss'}}</td>
+							<td>{{emotions[x.label]}}</td>
+							<td ng-click="openModal('viewImage', x)"><i class="fa fa-envelope-open text-primary"></i></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="viewImage" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Image</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<div class="card text-center">
+					<img class="card-img-top align-center" src="{{modalData.url}}" style="max-width:200px;max-height:200px;">
+					<div class="card-body">
+						<h4 class="card-title">Emotion Predicted: {{emotions[modalData.label]}}</h4>
+					</div>
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item" ng-repeat="x in modalData.emotion">{{ emotions[$index] }} : {{ x*100 | number: 2 }}%</li>
+					</ul>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
